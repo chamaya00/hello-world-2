@@ -6,6 +6,7 @@ export interface Post {
   date: string;
   readTime: string;
   tags: string[];
+  featured: boolean;
 }
 
 export const posts: Post[] = [
@@ -36,7 +37,8 @@ export const posts: Post[] = [
     `,
     date: "Dec 10, 2024",
     readTime: "5 min read",
-    tags: ["Next.js", "React", "Web Development"]
+    tags: ["Next.js", "React", "Web Development"],
+    featured: true
   },
   {
     slug: "the-art-of-clean-code",
@@ -63,7 +65,8 @@ export const posts: Post[] = [
     `,
     date: "Dec 5, 2024",
     readTime: "4 min read",
-    tags: ["Programming", "Best Practices", "Software Engineering"]
+    tags: ["Programming", "Best Practices", "Software Engineering"],
+    featured: false
   },
   {
     slug: "designing-for-accessibility",
@@ -92,10 +95,15 @@ export const posts: Post[] = [
     `,
     date: "Nov 28, 2024",
     readTime: "6 min read",
-    tags: ["Accessibility", "UX", "Web Development"]
+    tags: ["Accessibility", "UX", "Web Development"],
+    featured: false
   }
 ];
 
 export function getPostBySlug(slug: string): Post | undefined {
   return posts.find(post => post.slug === slug);
+}
+
+export function getFeaturedPost(): Post | undefined {
+  return posts.find(post => post.featured);
 }

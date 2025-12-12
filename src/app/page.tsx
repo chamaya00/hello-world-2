@@ -1,10 +1,11 @@
 import Link from "next/link";
 import PostCard from "@/components/PostCard";
 import ProjectCard from "@/components/ProjectCard";
-import { posts } from "@/data/posts";
+import { posts, getFeaturedPost } from "@/data/posts";
 import { getFeaturedProjects } from "@/data/projects";
 
 export default function Home() {
+  const featuredPost = getFeaturedPost();
   const recentPosts = posts.slice(0, 2);
   const featuredProjects = getFeaturedProjects();
 
@@ -36,6 +37,45 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      {/* Featured Post */}
+      {featuredPost && (
+        <section className="mb-20">
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold">Featured Post</h2>
+          </div>
+          <div className="rounded-lg border border-[var(--border-color)] bg-[var(--hover-bg)] p-8">
+            <Link href={`/posts/${featuredPost.slug}`} className="block">
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-2 font-sans-medium text-sm text-[var(--text-secondary)]">
+                  <span>{featuredPost.date}</span>
+                  <span>·</span>
+                  <span>{featuredPost.readTime}</span>
+                </div>
+
+                <h3 className="text-3xl font-bold leading-tight text-[var(--foreground)] transition-colors hover:text-[var(--accent-color)]">
+                  {featuredPost.title}
+                </h3>
+
+                <p className="text-lg leading-relaxed text-[var(--text-secondary)]">
+                  {featuredPost.excerpt}
+                </p>
+
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {featuredPost.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="font-sans-medium rounded-full bg-[var(--background)] px-3 py-1 text-xs text-[var(--text-secondary)]"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          </div>
+        </section>
+      )}
 
       {/* Recent Posts */}
       <section className="mb-20">
